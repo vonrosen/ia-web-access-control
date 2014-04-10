@@ -95,7 +95,7 @@ public class NewSurtTokenizer implements Iterable<String> {
             } 
             
             // Host index: ")/..."
-            if (pos == endOfAuthority) {
+            if (pos == endOfAuthority && ((pos + 2) <= endOfPath)) {
                 return pos + 2;
             }
             

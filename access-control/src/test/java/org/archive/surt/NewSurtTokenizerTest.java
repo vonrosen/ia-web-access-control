@@ -185,6 +185,56 @@ public class NewSurtTokenizerTest extends TestCase {
         
     }
 
+    /**
+     * Missing "{@code /}" after "{@code )}".
+     * <p>Return {@code ")"} instead of {@code ")/"}.</p?
+     */
+    public void testNoSlashAfterCloseParen() {
+        final String input = "http://(br,com,cade,www,)";
+        final String[] expected = new String[] {
+                "http://(",
+                "br,",
+                "com,",
+                "cade,",
+                "www,",
+                ")"
+        };
+        NewSurtTokenizer tok = new NewSurtTokenizer(input);
+        Iterator<String> it = tok.iterator();
+        int n = 0;
+        for (String exp : expected) {
+            assertEquals("component[" + n++ + "]", exp, it.next());
+        }
+        assertFalse(it.hasNext());
+    }
+
+    /**
+     * Pathological case of missing "{@code /}" between "{@code )}" and
+     * path.
+     * <p>In other words, path does not start with "{@code /}".
+     * Maybe paranoid, but try to return sensible sequence.</p>
+     */
+    public void testNoSlashAfterCloseParenWithPath() {
+        final String input = "http://(br,com,cade,www,)fishes/pinky.html";
+        final String[] expected = new String[] {
+                "http://(",
+                "br,",
+                "com,",
+                "cade,",
+                "www,",
+                ")",
+                "fishes/",
+                "pinky.html"
+        };
+        NewSurtTokenizer tok = new NewSurtTokenizer(input);
+        Iterator<String> it = tok.iterator();
+        int n = 0;
+        for (String exp : expected) {
+            assertEquals("component[" + n++ + "]", exp, it.next());
+        }
+        assertFalse(it.hasNext());
+    }
+
     public void testSearchList() {
         NewSurtTokenizer tok = new NewSurtTokenizer("(org,archive,www,)/fishes/pinky.html?moo=yes&bar=12#423");
         Iterator<String> it = tok.getSearchList().iterator();

@@ -96,7 +96,11 @@ public class NewSurtTokenizer implements Iterable<String> {
             
             // Host index: ")/..."
             if (pos == endOfAuthority) {
-                return pos + 2;
+                // if '/' does not follow ')', just return ")"
+                if (pos + 1 < preTabLength && surt.charAt(pos + 1) == '/')
+                    return pos + 2;
+                else
+                    return pos + 1;
             }
             
             // Path segments: "directory/"

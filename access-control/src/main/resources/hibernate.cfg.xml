@@ -19,6 +19,7 @@
 		<property name="transaction.factory_class">
 			org.hibernate.transaction.JDBCTransactionFactory
 		</property>
+		<mapping resource="RegexReplacement.hbm.xml" />
 		<mapping resource="Rule.hbm.xml" />
 		<mapping resource="RuleChange.hbm.xml" />
 

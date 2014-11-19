@@ -14,12 +14,12 @@ import org.archive.surt.NewSurtTokenizer;
  * @author aosborne
  * 
  */
-public class RuleSet implements Iterable<Rule> {
-    protected HashMap<String, TreeSet<Rule>> rulemap = new HashMap<String, TreeSet<Rule>>();
+public class RuleSet<T extends Rule> implements Iterable<T> {
+    protected HashMap<String, TreeSet<T>> rulemap = new HashMap<String, TreeSet<T>>();
 
-    class RuleSetIterator implements Iterator<Rule> {
-        private Iterator<TreeSet<Rule>> mapIterator;
-        private Iterator<Rule> setIterator;
+    class RuleSetIterator implements Iterator<T> {
+        private Iterator<TreeSet<T>> mapIterator;
+        private Iterator<T> setIterator;
 
         public RuleSetIterator() {
             mapIterator = rulemap.values().iterator();
@@ -37,7 +37,7 @@ public class RuleSet implements Iterable<Rule> {
             }
         }
 
-        public Rule next() {
+        public T next() {
             if (hasNext()) {
                 return setIterator.next();
             }
@@ -63,18 +63,18 @@ public class RuleSet implements Iterable<Rule> {
      *            group
      * @return
      */
-    public Rule getMatchingRule(String surt, Date captureDate,
+    public T getMatchingRule(String surt, Date captureDate,
             Date retrievalDate, String who) {
 
         NewSurtTokenizer tok = new NewSurtTokenizer(surt);
         
         // Best general rule (when accessGroup is blank)
-        Rule ruleGeneral = null;
+        T ruleGeneral = null;
 
         for (String key: tok.getSearchList()) {
-            Iterable<Rule> rules = rulemap.get(key); 
+            Iterable<T> rules = rulemap.get(key); 
             if (rules != null) {
-                for (Rule rule : rules) {
+                for (T rule : rules) {
                     if (rule.matches(surt, captureDate, retrievalDate, who)) {
                     	// Return this if accessGroup (who) matches exactly
                     	if ((who != null) && who.equals(rule.getWho())) {
@@ -91,23 +91,23 @@ public class RuleSet implements Iterable<Rule> {
         return ruleGeneral;
     }
 
-    public void addAll(Iterable<Rule> rules) {
-        for (Rule rule : rules) {
+    public void addAll(Iterable<T> rules) {
+        for (T rule : rules) {
             add(rule);
         }
     }
 
-    public void add(Rule rule) {
+    public void add(T rule) {
         String surt = rule.getSurt();
-        TreeSet<Rule> set = rulemap.get(surt);
+        TreeSet<T> set = rulemap.get(surt);
         if (set == null) {
-            set = new TreeSet<Rule>();
+            set = new TreeSet<T>();
             rulemap.put(surt, set);
         }
         set.add(rule);
     }
 
-    public Iterator<Rule> iterator() {
+    public Iterator<T> iterator() {
         return new RuleSetIterator();
     }
 

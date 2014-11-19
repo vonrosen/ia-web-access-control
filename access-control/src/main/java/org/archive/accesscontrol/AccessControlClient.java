@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 
+import org.archive.accesscontrol.model.RegexRule;
 import org.archive.accesscontrol.model.Rule;
 import org.archive.accesscontrol.model.RuleSet;
 import org.archive.accesscontrol.robotstxt.CachingRobotClient;
@@ -91,6 +92,28 @@ public class AccessControlClient {
                                RuleOracleUnavailableException {
         return getPolicy(url, getRule(url, captureDate, retrievalDate, who));
     }
+    
+    /**
+     * Return the best-matching policy for the requested document.
+     * 
+     * @param url
+     *            URL of the requested document.
+     * @param captureDate
+     *            Date the document was archived.
+     * @param retrievalDate
+     *            Date of retrieval (usually now).
+     * @param who
+     *            Group name of the user accessing the document.
+     * @return Access-control policy that should be enforced. eg "robots",
+     *         "block" or "allow".
+     * @throws RobotsUnavailableException 
+     * @throws RuleOracleUnavailableException 
+     */
+    public RegexRule getPolicyRegexRule(String url, Date captureDate, Date retrievalDate,
+            String who) throws RobotsUnavailableException, 
+                               RuleOracleUnavailableException {
+        return getRegexRule(url, captureDate, retrievalDate, who);
+    }    
 
     /**
      * Return the best-matching policy for the requested document.
@@ -142,6 +165,35 @@ public class AccessControlClient {
                 retrievalDate, who);
         return matchingRule;
     }
+    
+    /**
+     * Return the most specific matching regexrule for the requested document.
+     * 
+     * @param url
+     *            URL of the requested document.
+     * @param captureDate
+     *            Date the document was archived.
+     * @param retrievalDate
+     *            Date of retrieval (usually now).
+     * @param who
+     *            Group name of the user accessing the document.
+     * @return
+     * @throws RuleOracleUnavailableException 
+     */
+    public RegexRule getRegexRule(String url, Date captureDate, Date retrievalDate,
+            String who) throws RuleOracleUnavailableException {
+        url = ArchiveUtils.addImpliedHttpIfNecessary(url);
+        String surt = SURT.fromURI(url);
+//        PublicSuffixes.reduceSurtToAssignmentLevel(surt)
+        String publicSuffix = PublicSuffixes
+                .reduceSurtToAssignmentLevel(getSurtAuthority(surt));
+
+            RuleSet<RegexRule> rules =  ruleDao.getRuleTree(getScheme(surt) + "(" + publicSuffix);
+
+        RegexRule matchingRule = rules.getMatchingRule(surt, captureDate,
+                retrievalDate, who);
+        return matchingRule;
+    }    
     
     /**
      * Return the most specific matching rule for the requested document.

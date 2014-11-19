@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-	<class name="org.archive.accesscontrol.model.Rule" table="rules" polymorphism="explicit">
-		<id name="id" column="id" type="java.lang.Long">
+	<class name="org.archive.accesscontrol.model.RegexRule" table="rules" polymorphism="implicit">
+		
+		<id name="id" type="java.lang.Long">
+			<column name='id'/>
 			<generator class="sequence">
 				<param name="sequence">rule_id_seq</param>
 			</generator>
-
 		</id>
+
+		<set name="regexReplacements" table="rule_regexreplacement" inverse="false" lazy="false" fetch="join"  sort="natural" cascade="all">
+			<key>
+                <column name="rule_id" not-null="true" />
+            </key>        	
+			
+			<many-to-many class="org.archive.accesscontrol.model.RegexReplacement">
+                <column name="regexreplacement_id" not-null="true"  />
+            </many-to-many>            
+    	</set>
 
 		<property name="policy" column="policy" type="java.lang.String" />
 		<property name="surt" column="surt" type="text" />

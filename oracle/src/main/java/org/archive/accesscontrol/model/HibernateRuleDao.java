@@ -1,4 +1,4 @@
-    package org.archive.accesscontrol.model;
+package org.archive.accesscontrol.model;
 
 import java.text.ParseException;
 import java.util.Collection;

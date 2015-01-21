@@ -11,6 +11,7 @@ public class CacheOnceHttpRegexRulesDao extends CacheOnceHttpRulesDao {
         super(oracleUrl);
     }
 
+    @Override
     public RegexRuleSet getRuleTree(String surt)
             throws RuleOracleUnavailableException {
 

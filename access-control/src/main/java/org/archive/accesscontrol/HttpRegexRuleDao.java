@@ -14,18 +14,13 @@ public class HttpRegexRuleDao extends HttpRuleDao {
     public HttpRegexRuleDao(String oracleUrl) {
         super(oracleUrl);
 
-        //xstream.alias("rule", RegexRule.class);
-        //xstream.alias("ruleSet", RegexRuleSet.class);
-        //xstream.alias("regexReplacement", RegexReplacement.class);
-        //xstream.alias("regexReplacements", PersistentSortedSet.class);
-        
         xstream.alias("ruleSet", RegexRuleSet.class);
         xstream.alias("rule", RegexRule.class);
         xstream.alias("regexReplacement", RegexReplacement.class);
         xstream.alias("ruleChange", RuleChange.class);
-        //xstream.addImplicitCollection(RegexRule.class, "regexReplacements");
+
+        //ignore any fields that have been dynamically added by Hibernate
         xstream.omitField(RegexReplacement.class, "rules");
-        
         xstream.omitField(RegexRule.class, "initialized");
         xstream.omitField(RegexRule.class, "owner");
         xstream.omitField(RegexRule.class, "cachedSize");

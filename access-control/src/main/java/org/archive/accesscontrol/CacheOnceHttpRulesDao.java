@@ -6,9 +6,9 @@ import org.archive.accesscontrol.model.Rule;
 import org.archive.accesscontrol.model.RuleSet;
 import org.archive.surt.NewSurtTokenizer;
 
-public class CacheOnceHttpRulesDao<T extends Rule> extends HttpRuleDao {
+public class CacheOnceHttpRulesDao extends HttpRuleDao {
 
-	protected RuleSet<T> allRules = null;
+	protected RuleSet allRules = null;
 	
 	public CacheOnceHttpRulesDao(String oracleUrl) {
 		super(oracleUrl);
@@ -18,7 +18,7 @@ public class CacheOnceHttpRulesDao<T extends Rule> extends HttpRuleDao {
 	public RuleSet getRuleTree(String surt)
 			throws RuleOracleUnavailableException {
 		
-        RuleSet<T> rules = new RuleSet<T>();
+        RuleSet rules = new RuleSet();
         
         // add the root SURT
         fillRulesWithExactSurt(rules, "(");
@@ -36,8 +36,8 @@ public class CacheOnceHttpRulesDao<T extends Rule> extends HttpRuleDao {
         return rules;
 	}
 
-	private void fillRulesWithExactSurt(RuleSet<T> rules, String surt) {
-		for (T rule : allRules) {
+	private void fillRulesWithExactSurt(RuleSet rules, String surt) {
+		for (Rule rule : allRules) {
 			String matchSurt = rule.getSurt();
 			if (matchSurt == null) continue;
 			if (matchSurt.equals(surt)) {
@@ -46,8 +46,8 @@ public class CacheOnceHttpRulesDao<T extends Rule> extends HttpRuleDao {
 		}
 	}
 
-	private void fillRulesWithSurtPrefix(RuleSet<T> rules, String surt) {
-		for (T rule : allRules) {
+	private void fillRulesWithSurtPrefix(RuleSet rules, String surt) {
+		for (Rule rule : allRules) {
 			String matchSurt = rule.getSurt();
 			if (matchSurt == null) continue;
 			if (matchSurt.startsWith(surt)) {

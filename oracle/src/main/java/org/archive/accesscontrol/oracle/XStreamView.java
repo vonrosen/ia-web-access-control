@@ -18,7 +18,7 @@ import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
  * 
  */
 public class XStreamView implements View {
-    private XStream xstream;
+    protected XStream xstream;
     private String contentType = "application/xml";
 
     public XStreamView(String format) {
@@ -38,7 +38,7 @@ public class XStreamView implements View {
         configureXStream();
     }
 
-    private void configureXStream() {
+    protected void configureXStream() {
         xstream.alias("rule", Rule.class);
         xstream.alias("ruleSet", RuleSet.class);
         xstream.alias("error", SimpleError.class);

@@ -9,7 +9,7 @@ import java.util.Date;
  * @author aosborne
  * 
  */
-public class RuleChange<T extends Rule> extends Rule {
+public class RuleChange extends Rule {
     public static final String CREATED = "created";
     public static final String UPDATED = "updated";
     public static final String DELETED = "deleted";
@@ -24,7 +24,7 @@ public class RuleChange<T extends Rule> extends Rule {
         super();
     }
 
-    public RuleChange(T rule, String changeType, Date changeDate,
+    public RuleChange(Rule rule, String changeType, Date changeDate,
             String changeUser, String changeComment) {
         super();
         setRule(rule);
@@ -84,7 +84,7 @@ public class RuleChange<T extends Rule> extends Rule {
      * @param rule
      *            the rule to set
      */
-    public void setRule(T rule) {
+    public void setRule(Rule rule) {
         if (rule == null) {
             setRuleId(null);
         } else {

@@ -54,7 +54,7 @@
 
 
 	<bean id="ruleDao"
-		class="org.archive.accesscontrol.model.HibernateRuleDao">
+		class="org.archive.accesscontrol.model.HibernateRegexRuleDao">
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
@@ -72,7 +72,7 @@
 						<value>xml</value>
 					</key>
 					<bean
-						class="org.archive.accesscontrol.oracle.XStreamView">
+						class="org.archive.accesscontrol.oracle.XStreamRegexRuleView">
 						<constructor-arg>
 							<value>xml</value>
 						</constructor-arg>
@@ -83,7 +83,7 @@
 						<value>json</value>
 					</key>
 					<bean
-						class="org.archive.accesscontrol.oracle.XStreamView">
+						class="org.archive.accesscontrol.oracle.XStreamRegexRuleView">
 						<constructor-arg>
 							<value>json</value>
 						</constructor-arg>

@@ -16,11 +16,11 @@
 		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
 
 	<bean name="/rules"
-		class="org.archive.accesscontrol.oracle.RulesController">		
+		class="org.archive.accesscontrol.oracle.RegexRulesController">
 	</bean>
 
 	<bean name="/admin"
-		class="org.archive.accesscontrol.webui.AdminController">		
+		class="org.archive.accesscontrol.webui.RegexAdminController">		
 	</bean>
 
 	<!-- MultipartResolver for parsing file uploads, implementation for Commons FileUpload -->

@@ -9,9 +9,7 @@ import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.HeadMethod;
-import org.archive.accesscontrol.model.RegexReplacement;
-import org.archive.accesscontrol.model.RegexRule;
-import org.archive.accesscontrol.model.RegexRuleSet;
+import org.archive.accesscontrol.model.Rule;
 import org.archive.accesscontrol.model.RuleSet;
 
 import com.thoughtworks.xstream.XStream;
@@ -36,9 +34,8 @@ public class HttpRuleDao implements RuleDao {
 
     public HttpRuleDao(String oracleUrl) {
         this.oracleUrl = oracleUrl;
-        xstream.alias("rule", RegexRule.class);
-        xstream.alias("ruleSet", RegexRuleSet.class);
-        xstream.alias("regexReplacement", RegexReplacement.class);
+        xstream.alias("rule", Rule.class);
+        xstream.alias("ruleSet", RuleSet.class);
     }
 
     /**

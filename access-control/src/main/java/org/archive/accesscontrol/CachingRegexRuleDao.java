@@ -14,6 +14,7 @@ public class CachingRegexRuleDao extends CachingRuleDao {
         this(new HttpRegexRuleDao(oracleUrl));
     }
 
+    @Override
     public RegexRuleSet getRuleTree(String surt) throws RuleOracleUnavailableException {
         
         RuleSet ruleSet = super.getRuleTree(surt);

@@ -8,8 +8,8 @@ import java.util.SortedSet;
 
 import org.archive.accesscontrol.model.RegexReplacement;
 import org.archive.accesscontrol.model.RegexRule;
-import org.archive.accesscontrol.model.RegexRuleSet;
 import org.archive.accesscontrol.model.RuleChange;
+import org.archive.accesscontrol.model.RuleSet;
 import org.hibernate.collection.PersistentBag;
 import org.hibernate.collection.PersistentList;
 import org.hibernate.collection.PersistentMap;
@@ -31,7 +31,7 @@ public class XStreamRegexRuleView extends XStreamView {
 
     protected void configureXStream() {
 
-        xstream.alias("ruleSet", RegexRuleSet.class);
+        xstream.alias("ruleSet", RuleSet.class);
         xstream.alias("rule", RegexRule.class);
         xstream.alias("regexReplacements", PersistentSortedSet.class);
         xstream.alias("regexReplacement", RegexReplacement.class);

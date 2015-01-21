@@ -14,7 +14,7 @@ public class RegexRuleAccessControlClient extends AccessControlClient {
     }
     
     public RegexRuleAccessControlClient(String oracleUrl, boolean cacheOnce) {
-        this(cacheOnce ? new CacheOnceHttpRegexRulesDao(oracleUrl)
+        this(cacheOnce ? new CacheOnceHttpRulesDao(oracleUrl)
                 : new CachingRegexRuleDao(oracleUrl), new CachingRobotClient());
     }
     

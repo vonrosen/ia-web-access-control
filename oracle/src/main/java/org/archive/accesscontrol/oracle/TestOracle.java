@@ -1,13 +1,12 @@
 package org.archive.accesscontrol.oracle;
 
 import java.io.FileInputStream;
-import java.util.TreeSet;
 
 import org.archive.accesscontrol.model.RegexReplacement;
 import org.archive.accesscontrol.model.RegexRule;
-import org.archive.accesscontrol.model.RegexRuleSet;
 import org.archive.accesscontrol.model.Rule;
 import org.archive.accesscontrol.model.RuleChange;
+import org.archive.accesscontrol.model.RuleSet;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -26,7 +25,7 @@ public class TestOracle {
         
         
         
-        xstream.alias("ruleSet", RegexRuleSet.class);
+        xstream.alias("ruleSet", RuleSet.class);
         xstream.alias("rule", RegexRule.class);
         xstream.alias("regexReplacement", RegexReplacement.class);
         xstream.alias("error", SimpleError.class);
@@ -62,7 +61,7 @@ public class TestOracle {
             FileInputStream fin = new FileInputStream ("/home/hstern/oracletest.xml");
             
             //System.out.println(xstream.fromXML(fin));
-            RegexRuleSet rules = (RegexRuleSet) xstream.fromXML(fin);
+            RuleSet rules = (RuleSet) xstream.fromXML(fin);
             
             for (Rule rule : rules) {
                 

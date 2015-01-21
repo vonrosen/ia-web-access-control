@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import com.thoughtworks.xstream.annotations.XStreamImplicit;
-
 public class RegexRule extends Rule {
 
-    @XStreamImplicit(itemFieldName="regexReplacement")
     private List<RegexReplacement> regexReplacements = Collections.synchronizedList(new ArrayList<RegexReplacement>());
     
     public List<RegexReplacement> getRegexReplacements() {

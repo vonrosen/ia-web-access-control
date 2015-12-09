@@ -49,7 +49,7 @@ public class AccessControlClient {
         this(cacheOnce ? new CacheOnceHttpRulesDao(oracleUrl) : new CachingRuleDao(oracleUrl), new CachingRobotClient());
     }
 
-    private String getPolicy(String url, Rule rule)
+    protected String getPolicy(String url, Rule rule)
         throws RobotsUnavailableException {
         if (robotLookupsEnabled && rule != null && "robots".equals(rule.getPolicy())) {
             try {
